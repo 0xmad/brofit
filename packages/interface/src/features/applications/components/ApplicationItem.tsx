@@ -32,7 +32,7 @@ export const ApplicationItem = ({
 
   const form = useFormContext<TApplicationsToApprove>();
 
-  const { fundingSources = [], profileImageUrl } = metadata.data ?? {};
+  const { profileImageUrl } = metadata.data ?? {};
 
   useEffect(() => {
     if (isApproved) {
@@ -58,10 +58,6 @@ export const ApplicationItem = ({
             <Skeleton className="mb-1 min-h-5 min-w-24" isLoading={isLoading}>
               <span className="uppercase">{metadata.data?.name}</span>
             </Skeleton>
-
-            <div className="text-sm text-gray-400">
-              <div>{fundingSources.length} funding sources</div>
-            </div>
           </div>
         </div>
 

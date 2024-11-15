@@ -79,7 +79,7 @@ const Stats = ({ pollId }: IStatsProps) => {
 
   return (
     <div>
-      <Heading size="lg">Top Projects</Heading>
+      <Heading size="lg">Top Challenges</Heading>
 
       <div className="mb-8 h-[400px] rounded-xl bg-white text-black">
         <ResultsChart data={chartData} />

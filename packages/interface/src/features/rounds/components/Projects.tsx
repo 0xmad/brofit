@@ -106,7 +106,7 @@ export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
 
       <div className="mb-4 flex flex-col justify-between sm:flex-row">
         <Heading as="h3" size="3xl">
-          Projects
+          Challenges
         </Heading>
 
         <div>
@@ -115,8 +115,12 @@ export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
       </div>
 
       {roundState === ERoundState.APPLICATION && (
-        <div className="mb-4 flex w-full justify-end">
-          <Link href={`/rounds/${pollId}/applications/new`}>
+        <div className="mb-4 flex w-full flex-wrap justify-between">
+          <Heading as="h4" className="mt-4 flex" size="l" style={{ alignItems: "center" }}>
+            Create AI-generated challenges, submit video proof via URL, and get verified with zk-proofs.
+          </Heading>
+
+          <Link className="mt-4 flex" href={`/rounds/${pollId}/applications/new`}>
             <Button size="auto" variant="primary">
               Create Application
             </Button>

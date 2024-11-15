@@ -27,11 +27,12 @@ const NewProjectPage = ({ pollId }: { pollId: string }): JSX.Element => {
 
           <p className="text-gray-400">
             <span className="inline-block">
-              Fill out this form to create an application for your project. It will then be reviewed by our admins.
+              Fill out this form to create an application for your challenge proof. It will then be reviewed by our
+              admins.
             </span>
 
             <span className="inline-block">
-              Your progress is saved locally so you can return to this page to resume your application.
+              Your proof is saved locally so you can return to this page to resume your application.
             </span>
           </p>
 
