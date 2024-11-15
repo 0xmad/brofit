@@ -30,7 +30,7 @@ export const Layout = ({ children = null, ...props }: ILayoutProps): JSX.Element
     if (roundState !== ERoundState.DEFAULT) {
       links.push({
         href: `/rounds/${props.pollId}`,
-        children: "Projects",
+        children: "Challenges",
       });
     }
 

@@ -53,7 +53,7 @@ export const ReviewBar = ({ pollId, projectId }: IReviewBarProps): JSX.Element =
 
   return (
     <div className="mb-4 w-full">
-      {isApproved && <StatusBar content="The project has been approved." status="approved" />}
+      {isApproved && <StatusBar content="The challenge has been approved." status="approved" />}
 
       {!isApproved && isAdmin && <StatusBar content="This project is pending approval." status="pending" />}
 

@@ -3,11 +3,8 @@ import { useMemo, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Heading } from "~/components/ui/Heading";
-import { Tag } from "~/components/ui/Tag";
 
 import type { Application } from "../types";
-
-import { LinkField } from "./LinkField";
 
 interface IValueFieldProps {
   title: string;
@@ -59,10 +56,6 @@ export const ReviewApplicationDetails = (): JSX.Element => {
           <ValueField required body={application.websiteUrl} title="Website" />
 
           <ValueField required body={application.payoutAddress} title="Payout address" />
-
-          <ValueField body={application.twitter} title="X(Twitter)" />
-
-          <ValueField body={application.github} title="Github" />
         </div>
 
         <div className="gap-6 sm:flex">
@@ -88,36 +81,6 @@ export const ReviewApplicationDetails = (): JSX.Element => {
             />
           </div>
         </div>
-      </div>
-
-      <div className="flex flex-col gap-6 dark:text-white">
-        <b className="text-lg">Contribution & Impact</b>
-
-        <ValueField required body={application.contributionDescription} title="Contribution description" />
-
-        <ValueField required body={application.impactDescription} title="Impact description" />
-
-        <ValueField
-          required
-          body={application.impactCategory?.map((tag) => (
-            <Tag key={tag} selected size="sm">
-              {tag}
-            </Tag>
-          ))}
-          title="Impact categories"
-        />
-
-        <ValueField
-          body={application.contributionLinks?.map((link) => (
-            <LinkField key={link.description} contributionLink={link} />
-          ))}
-          title="Contribution links"
-        />
-
-        <ValueField
-          body={application.fundingSources?.map((link) => <LinkField key={link.description} fundingSource={link} />)}
-          title="Funding sources"
-        />
       </div>
     </div>
   );

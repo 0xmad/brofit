@@ -13,7 +13,6 @@ import type { IRecipient } from "~/utils/types";
 import { useProjectMetadata } from "../hooks/useProjects";
 import { EProjectState } from "../types";
 
-import { ImpactCategories } from "./ImpactCategories";
 import { ProjectAvatar } from "./ProjectAvatar";
 import { ProjectBanner } from "./ProjectBanner";
 
@@ -56,10 +55,6 @@ export const ProjectItem = ({
             {metadata.data?.bio}
           </Skeleton>
         </div>
-
-        <Skeleton className="w-[100px]" isLoading={isLoading}>
-          <ImpactCategories tags={metadata.data?.impactCategory} />
-        </Skeleton>
 
         {!isLoading && state !== undefined && action && roundState === ERoundState.VOTING && (
           <div className="flex justify-end pt-6">

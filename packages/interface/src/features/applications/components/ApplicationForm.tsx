@@ -5,16 +5,15 @@ import { toast } from "sonner";
 import { useAccount } from "wagmi";
 
 import { ImageUpload } from "~/components/ImageUpload";
-import { FieldArray, Form, FormControl, FormSection, Select, Textarea } from "~/components/ui/Form";
+import { Form, FormControl, FormSection, Textarea } from "~/components/ui/Form";
 import { Input } from "~/components/ui/Input";
 import { useIsCorrectNetwork } from "~/hooks/useIsCorrectNetwork";
 
 import { useCreateApplication } from "../hooks/useCreateApplication";
-import { ApplicationSchema, contributionTypes, fundingSourceTypes, type Application } from "../types";
+import { ApplicationSchema, type Application } from "../types";
 
 import { ApplicationButtons, EApplicationStep } from "./ApplicationButtons";
 import { ApplicationSteps } from "./ApplicationSteps";
-import { ImpactTags } from "./ImpactTags";
 import { ReviewApplicationDetails } from "./ReviewApplicationDetails";
 
 interface IApplicationFormProps {
@@ -40,16 +39,12 @@ export const ApplicationForm = ({ pollId }: IApplicationFormProps): JSX.Element 
 
   const handleNextStep = useCallback(() => {
     if (step === EApplicationStep.PROFILE) {
-      setStep(EApplicationStep.ADVANCED);
-    } else if (step === EApplicationStep.ADVANCED) {
       setStep(EApplicationStep.REVIEW);
     }
   }, [step, setStep]);
 
   const handleBackStep = useCallback(() => {
     if (step === EApplicationStep.REVIEW) {
-      setStep(EApplicationStep.ADVANCED);
-    } else if (step === EApplicationStep.ADVANCED) {
       setStep(EApplicationStep.PROFILE);
     }
   }, [step, setStep]);
@@ -89,39 +84,23 @@ export const ApplicationForm = ({ pollId }: IApplicationFormProps): JSX.Element 
         <FormSection
           className={step === EApplicationStep.PROFILE ? "block" : "hidden"}
           description="Please provide information about your project."
-          title="Project Profile"
+          title="Fitness Profile"
         >
-          <FormControl required hint="This is the name of your project" label="Project name" name="name">
-            <Input placeholder="Type your project name" />
+          <FormControl required hint="This is the name of yourself" label="Name" name="name">
+            <Input placeholder="Type your name" />
           </FormControl>
 
-          <FormControl required label="Description" name="bio">
-            <Textarea placeholder="Type project description" rows={4} />
+          <FormControl required label="Your fitness challenge" name="bio">
+            <Textarea disabled placeholder="Your fitness challenge" rows={4} />
           </FormControl>
 
           <div className="gap-4 md:flex">
-            <FormControl required className="flex-1" label="Website" name="websiteUrl">
+            <FormControl required className="flex-1" label="Video confirmation" name="websiteUrl">
               <Input placeholder="https://" />
             </FormControl>
 
             <FormControl required className="flex-1" label="Payout address" name="payoutAddress">
               <Input placeholder="0x..." />
-            </FormControl>
-          </div>
-
-          <div className="gap-4 md:flex">
-            <FormControl className="flex-1" label="X(Twitter)" name="twitter" required={false}>
-              <Input placeholder="Type your twitter username" />
-            </FormControl>
-
-            <FormControl
-              className="flex-1"
-              hint="Provide your github of this project"
-              label="Github"
-              name="github"
-              required={false}
-            >
-              <Input placeholder="Type your github username" />
             </FormControl>
           </div>
 
@@ -145,80 +124,6 @@ export const ApplicationForm = ({ pollId }: IApplicationFormProps): JSX.Element 
               <ImageUpload className="h-48" />
             </FormControl>
           </div>
-        </FormSection>
-
-        <FormSection
-          className={step === EApplicationStep.ADVANCED ? "block" : "hidden"}
-          description="Describe the contribution and impact of your project."
-          title="Contribution & Impact"
-        >
-          <FormControl required label="Contribution description" name="contributionDescription">
-            <Textarea placeholder="What have your project contributed to?" rows={4} />
-          </FormControl>
-
-          <FormControl required label="Impact description" name="impactDescription">
-            <Textarea placeholder="What impact has your project had?" rows={4} />
-          </FormControl>
-
-          <ImpactTags />
-
-          <FieldArray
-            description="Where can we find your contributions?"
-            name="contributionLinks"
-            renderField={(field, i) => (
-              <div className="mb-4 flex flex-wrap gap-2">
-                <FormControl required className="min-w-96" name={`contributionLinks.${i}.description`}>
-                  <Input placeholder="Type the description of your contribution" />
-                </FormControl>
-
-                <FormControl required className="min-w-72" name={`contributionLinks.${i}.url`}>
-                  <Input placeholder="https://" />
-                </FormControl>
-
-                <FormControl required name={`contributionLinks.${i}.type`}>
-                  <Select>
-                    {Object.entries(contributionTypes).map(([value, label]) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-            )}
-            title="Contribution links"
-          />
-
-          <FieldArray
-            description="From what sources have you received funding?"
-            name="fundingSources"
-            renderField={(field, i) => (
-              <div className="mb-4 flex flex-wrap gap-2">
-                <FormControl required className="min-w-96" name={`fundingSources.${i}.description`}>
-                  <Input placeholder="Type the name of your funding source" />
-                </FormControl>
-
-                <FormControl required valueAsNumber className="w-32" name={`fundingSources.${i}.amount`}>
-                  <Input placeholder="Amount" type="number" />
-                </FormControl>
-
-                <FormControl required className="w-32" name={`fundingSources.${i}.currency`}>
-                  <Input placeholder="e.g. USD" />
-                </FormControl>
-
-                <FormControl required name={`fundingSources.${i}.type`}>
-                  <Select>
-                    {Object.entries(fundingSourceTypes).map(([value, label]) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-            )}
-            title="Funding sources"
-          />
         </FormSection>
 
         {step === EApplicationStep.REVIEW && <ReviewApplicationDetails />}

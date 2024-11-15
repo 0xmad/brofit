@@ -13,6 +13,7 @@ import { ERoundState } from "~/utils/types";
 import { ConnectButton } from "./ConnectButton";
 import { IconButton } from "./ui/Button";
 import { Logo } from "./ui/Logo";
+import { Sponsor } from "./ui/Sponsor";
 
 interface INavLinkProps extends ComponentPropsWithRef<typeof Link> {
   isActive: boolean;
@@ -96,7 +97,7 @@ const Header = ({ navLinks, pollId = "" }: IHeaderProps) => {
         <div className="hidden h-full items-center gap-4 overflow-x-auto uppercase md:flex">
           {navLinks.map((link) => {
             const isActive =
-              asPath.includes(link.children.toLowerCase()) || (link.children === "Projects" && isRoundIndexPage);
+              asPath.includes(link.children.toLowerCase()) || (link.children === "Challenges" && isRoundIndexPage);
 
             return (
               <NavLink key={link.href} href={link.href} isActive={isActive}>
@@ -115,6 +116,10 @@ const Header = ({ navLinks, pollId = "" }: IHeaderProps) => {
         <div className="flex-1 md:ml-8" />
 
         <div className="ml-4 flex items-center gap-4 md:ml-8 xl:ml-32">
+          <Link className="py-4" href="https://t.me/amoreAIcrypto" target="_blank">
+            <Sponsor />
+          </Link>
+
           <IconButton
             className="text-gray-600"
             icon={theme === "light" ? SunIcon : MoonIcon}

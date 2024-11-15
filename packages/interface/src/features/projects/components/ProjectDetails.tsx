@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { type ReactNode } from "react";
 
 import { Heading } from "~/components/ui/Heading";
@@ -13,19 +14,18 @@ import type { IRecipient } from "~/utils/types";
 import { useProjectMetadata } from "../hooks/useProjects";
 
 import { ProjectContacts } from "./ProjectContacts";
-import { ProjectDescriptionSection } from "./ProjectDescriptionSection";
 
 export interface IProjectDetailsProps {
   pollId: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   action?: ReactNode;
   project: IRecipient;
 }
 
-const ProjectDetails = ({ pollId, project, action = undefined }: IProjectDetailsProps): JSX.Element => {
+const ProjectDetails = ({ pollId, project }: IProjectDetailsProps): JSX.Element => {
   const metadata = useProjectMetadata(project.metadataUrl);
 
-  const { bio, websiteUrl, payoutAddress, github, twitter, fundingSources, profileImageUrl, bannerImageUrl } =
-    metadata.data ?? {};
+  const { bio, websiteUrl, payoutAddress, profileImageUrl, bannerImageUrl } = metadata.data ?? {};
 
   const roundState = useRoundState(pollId);
 
@@ -53,29 +53,13 @@ const ProjectDetails = ({ pollId, project, action = undefined }: IProjectDetails
         )}
       </div>
 
-      <ProjectContacts author={payoutAddress} github={github} twitter={twitter} website={websiteUrl} />
+      {/** eslint-disable-next-line jsx-a11y/media-has-caption */}
+      {/** https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm */}
+      <video controls src={websiteUrl} style={{ height: "auto", maxHeight: 500, width: "100%" }} />
 
-      <p className="px-2 text-gray-400">{bio}</p>
+      <p className="mt-3 px-2 text-gray-400">{bio}</p>
 
-      <div className="my-8 flex flex-col gap-8 px-2">
-        <p className="text-xl uppercase">
-          <b>Impact statements</b>
-        </p>
-
-        <ProjectDescriptionSection
-          contributions={metadata.data?.contributionLinks}
-          description={metadata.data?.contributionDescription}
-          title="contributions"
-        />
-
-        <ProjectDescriptionSection
-          description={metadata.data?.impactDescription}
-          fundings={fundingSources}
-          title="past grants and funding"
-        />
-
-        {action}
-      </div>
+      <ProjectContacts author={payoutAddress} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { FaGithub, FaDiscord } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 import { Logo } from "./ui/Logo";
+import { Sponsor } from "./ui/Sponsor";
 
 export const Footer = (): JSX.Element => (
   <footer className="dark:border-lighterBlack flex items-center justify-between border-t border-gray-300 bg-gray-50 px-12 py-9 dark:bg-black dark:text-white">
@@ -37,6 +38,8 @@ export const Footer = (): JSX.Element => (
 
         <Image alt="arrow-go-to" className="dark:invert" height="18" src="/arrow-go-to.svg" width="18" />
       </a>
+
+      <Sponsor />
 
       <Logo />
     </div>
