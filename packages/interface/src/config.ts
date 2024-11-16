@@ -1,8 +1,9 @@
 import * as wagmiChains from "wagmi/chains";
 
 export const metadata = {
-  title: "Pumpbet",
-  description: "Open-source Fitnes Challenge platform with MACI for private on chain voting",
+  title: "Pumpbet Challenge",
+  description:
+    "Fitness platform where you can join exciting challenges, track progress, and compete with friends to reach your fitness goals.",
   url: "https://pumpbet.xyz/",
   image: "/api/og",
 };
