@@ -116,7 +116,7 @@ const Header = ({ navLinks, pollId = "" }: IHeaderProps) => {
         <div className="flex-1 md:ml-8" />
 
         <div className="ml-4 flex items-center gap-4 md:ml-8 xl:ml-32">
-          <Link className="py-4" href="https://t.me/amoreAIcrypto" target="_blank">
+          <Link className="py-4" href="https://amorecoin.com" target="_blank">
             <Sponsor />
           </Link>
 
