@@ -34,7 +34,7 @@ const HomePage = (): JSX.Element => {
           <p className="text-gray-400">There are no rounds deployed.</p>
         )}
 
-        {rounds && rounds.length > 0 && <RoundsList />}
+        {rounds && rounds.length > 0 && isConnected && (isRegistered || isAdmin) && <RoundsList />}
       </div>
     </Layout>
   );
