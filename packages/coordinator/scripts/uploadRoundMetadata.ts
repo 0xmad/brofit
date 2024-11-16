@@ -24,7 +24,7 @@ interface IUploadMetadataProps {
 
 const METADATA_PATH = path.resolve("./round-metadata.json");
 
-dotenv.config({ path: path.resolve(import.meta.dirname, "../.env") });
+dotenv.config({ path: path.resolve("./.env") });
 
 /**
  * A function to check if the input string is a valid date
@@ -53,6 +53,40 @@ export async function uploadRoundMetadata({ data, name }: IUploadMetadataProps):
   return blob.url;
 }
 
+async function fetchChallenge(): Promise<IFetchChallengeData> {
+  return fetch("https://api.ai21.com/studio/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.AI21_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "jamba-1.5-mini",
+      messages: [
+        {
+          role: "user",
+          content:
+            "You are Charles Arthur Salvador (born Michael Gordon Peterson; 6 December 1952; formerly known as Charles Ali Ahmed) better known by his professional name of Charles Bronson, is a British criminal, with a violent and notorious life as a prisoner.[6] He has spent periods detained in the Rampton, Broadmoor, and Ashworth high-security psychiatric hospitals.\n\nYou main goal is to make fitness challenges for people who wants to be fit. Generate 10 exercises based on your book. Generate only exercises without any intros and outros but with short information about the exercises. Use only markdown for styling.",
+        },
+      ],
+      documents: [],
+      tools: [],
+      n: 1,
+      max_tokens: 2048,
+      temperature: 0.4,
+      top_p: 1,
+      stop: [],
+      response_format: { type: "text" },
+    }),
+  })
+    .then((result) => result.json())
+    .then((result) => result as IFetchChallengeData);
+}
+
+interface IFetchChallengeData {
+  choices: { message: { content: string } }[];
+}
+
 /**
  * This function collect round information from the console
  * @returns an object containing information of the round
@@ -72,14 +106,14 @@ export async function collectMetadata(): Promise<RoundMetadata> {
       });
     });
 
-  const askDescription = () =>
-    new Promise<string>((resolve) => {
-      rl.question("Could you briefly introduce this round? ", (answer) => {
-        // eslint-disable-next-line no-console
-        console.log(`Your round description is: ${answer}`);
-        resolve(answer);
-      });
-    });
+  const askDescription = async () => {
+    // eslint-disable-next-line no-console
+    console.log("Generate challenge");
+    const result = await fetchChallenge().then((data) => data.choices[0].message.content);
+    // eslint-disable-next-line no-console
+    console.log("Challenge has been generated");
+    return result;
+  };
 
   const askStartTime = () =>
     new Promise<Date>((resolve, reject) => {

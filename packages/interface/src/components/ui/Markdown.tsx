@@ -11,6 +11,7 @@ export const Markdown = ({ isLoading = false, ...props }: IMarkdownProps): JSX.E
     className={clsx("prose prose-xl max-w-none", {
       "h-96 animate-pulse rounded-xl bg-gray-100": isLoading,
     })}
+    style={{ textAlign: "left", maxHeight: 300, overflow: "auto" }}
   >
     <ReactMarkdown {...props} />
   </div>

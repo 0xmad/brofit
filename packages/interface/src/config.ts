@@ -1,9 +1,9 @@
 import * as wagmiChains from "wagmi/chains";
 
 export const metadata = {
-  title: "MACI PLATFORM",
-  description: "Open-source Retro Public Goods Funding platform with MACI for private on chain voting/",
-  url: "https://maci-platform.vercel.app",
+  title: "Pumpbet",
+  description: "Open-source Fitnes Challenge platform with MACI for private on chain voting",
+  url: "https://pumpbet.xyz/",
   image: "/api/og",
 };
 

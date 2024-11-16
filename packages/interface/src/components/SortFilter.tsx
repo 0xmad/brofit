@@ -23,7 +23,7 @@ export const SortFilter = (): JSX.Element => {
 
   return (
     <div className="mb-2 flex flex-1 gap-2">
-      <SearchInput className="w-full" placeholder="Search project..." value={search} onChange={onChange} />
+      <SearchInput className="w-full" placeholder="Search participant..." value={search} onChange={onChange} />
 
       <SortByDropdown
         options={["name_asc", "name_desc"]}
