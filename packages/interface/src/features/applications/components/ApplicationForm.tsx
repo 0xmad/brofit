@@ -30,9 +30,8 @@ export const ApplicationForm = ({ pollId }: IApplicationFormProps): JSX.Element 
   const router = useRouter();
 
   /**
-   * There are 3 steps for creating an application.
+   * There are 2 steps for creating an application.
    * The first step is to set the project introduction (profile);
-   * the second step is to set the contributions, impacts, and funding sources (advanced);
    * the last step is to review the input values, allow editing by going back to previous steps (review).
    */
   const [step, setStep] = useState<EApplicationStep>(EApplicationStep.PROFILE);
@@ -90,8 +89,8 @@ export const ApplicationForm = ({ pollId }: IApplicationFormProps): JSX.Element 
             <Input placeholder="Type your name" />
           </FormControl>
 
-          <FormControl required label="Your fitness challenge" name="bio">
-            <Textarea disabled placeholder="Your fitness challenge" rows={4} />
+          <FormControl required label="Your bio" name="bio">
+            <Textarea placeholder="Your bio" rows={4} />
           </FormControl>
 
           <div className="gap-4 md:flex">

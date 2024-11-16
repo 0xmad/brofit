@@ -72,7 +72,7 @@ export const RoundItem = ({ round }: IRoundItemProps): JSX.Element => {
           {round.roundId}
         </Heading>
 
-        <p className="my-4 text-gray-400">{round.description}</p>
+        <p className="my-4 text-gray-400">Get ready for {round.roundId}!</p>
 
         <RoundTag state={roundState} />
       </div>

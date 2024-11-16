@@ -97,7 +97,7 @@ const Header = ({ navLinks, pollId = "" }: IHeaderProps) => {
         <div className="hidden h-full items-center gap-4 overflow-x-auto uppercase md:flex">
           {navLinks.map((link) => {
             const isActive =
-              asPath.includes(link.children.toLowerCase()) || (link.children === "Challenges" && isRoundIndexPage);
+              asPath.includes(link.children.toLowerCase()) || (link.children === "Participants" && isRoundIndexPage);
 
             return (
               <NavLink key={link.href} href={link.href} isActive={isActive}>

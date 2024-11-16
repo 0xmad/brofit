@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import { Hex, zeroAddress } from "viem";
 
@@ -8,7 +8,9 @@ import { InfiniteLoading } from "~/components/InfiniteLoading";
 import { SortFilter } from "~/components/SortFilter";
 import { StatusBar } from "~/components/StatusBar";
 import { Button } from "~/components/ui/Button";
+import { Dialog } from "~/components/ui/Dialog";
 import { Heading } from "~/components/ui/Heading";
+import { Markdown } from "~/components/ui/Markdown";
 import { useBallot } from "~/contexts/Ballot";
 import { useMaci } from "~/contexts/Maci";
 import { useRound } from "~/contexts/Round";
@@ -26,6 +28,7 @@ export interface IProjectsProps {
 
 export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
   const roundState = useRoundState(pollId);
+  const [isShowChallenge, setShowChallenge] = useState(true);
 
   const { getRoundByPollId } = useRound();
   const round = useMemo(() => getRoundByPollId(pollId), [pollId, getRoundByPollId]);
@@ -38,6 +41,10 @@ export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
   const results = useResults(pollId, (round?.registryAddress ?? zeroAddress) as Hex, round?.tallyFile);
 
   const ballot = useMemo(() => getBallot(pollId), [pollId, getBallot]);
+
+  const onShowChallenge = useCallback(() => {
+    setShowChallenge((value) => !value);
+  }, [setShowChallenge]);
 
   const handleAction = useCallback(
     (projectIndex: number, projectId: string) => (e: Event) => {
@@ -105,19 +112,25 @@ export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
       )}
 
       <div className="mb-4 flex flex-col justify-between sm:flex-row">
-        <Heading as="h3" size="3xl">
-          Challenges
+        <Heading as="h3" className="mt-2" size="3xl">
+          Participants
         </Heading>
 
-        <div>
-          <SortFilter />
+        <div className="flex flex-col justify-between sm:flex-row">
+          <Button className="mx-4 mt-2" size="auto" variant="primary" onClick={onShowChallenge}>
+            Show Challenge
+          </Button>
+
+          <div className="mt-2 w-full">
+            <SortFilter />
+          </div>
         </div>
       </div>
 
       {roundState === ERoundState.APPLICATION && (
         <div className="mb-4 flex w-full flex-wrap justify-between">
           <Heading as="h4" className="mt-4 flex" size="l" style={{ alignItems: "center" }}>
-            Create AI-generated challenges, submit video proof via URL, and get verified with zk-proofs.
+            Complete AI-generated challenges, submit video proof via URL, and get verified with zk-proofs.
           </Heading>
 
           <Link className="mt-4 flex" href={`/rounds/${pollId}/applications/new`}>
@@ -126,6 +139,16 @@ export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
             </Button>
           </Link>
         </div>
+      )}
+
+      {round && (
+        <Dialog
+          description={<Markdown className="my-4">{round.description}</Markdown>}
+          isOpen={isShowChallenge}
+          size="sm"
+          title={round.roundId}
+          onOpenChange={onShowChallenge}
+        />
       )}
 
       <InfiniteLoading
