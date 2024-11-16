@@ -28,7 +28,7 @@ export interface IProjectsProps {
 
 export const Projects = ({ pollId = "" }: IProjectsProps): JSX.Element => {
   const roundState = useRoundState(pollId);
-  const [isShowChallenge, setShowChallenge] = useState(true);
+  const [isShowChallenge, setShowChallenge] = useState(false);
 
   const { getRoundByPollId } = useRound();
   const round = useMemo(() => getRoundByPollId(pollId), [pollId, getRoundByPollId]);
